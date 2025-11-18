@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:app/colors_app.dart';
+import 'package:app/components/item_tasca.dart';
 import 'package:flutter/material.dart';
 
 class PantallaTasquesPetita extends StatelessWidget {
@@ -21,7 +24,31 @@ class PantallaTasquesPetita extends StatelessWidget {
           ),
         ],
       ),
-      body: const Center(child: Text('Pantalla de tasques petita (mòbil)')),
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 2,
+            decoration: BoxDecoration(
+              color: ColorsApp.colorBlanc,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 2,
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 30,
+              itemBuilder: (context, index){
+                return ItemTasca(
+                  valorText: index.toString(),
+                );
+              }),
+          ),
+        ],
+      ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
