@@ -2,6 +2,8 @@ import 'package:app/colors_app.dart';
 import 'package:flutter/material.dart';
 
 class ItemTasca extends StatefulWidget {
+  //final: perque no canviarà mai de valor
+  //const: perque és un widget immutable
   final bool valorInicialCheckbox;
   final String valorText;
 
@@ -26,7 +28,6 @@ class _ItemTascaState extends State<ItemTasca> {
     valorCheckbox = widget.valorInicialCheckbox;
     //"widget." ho posem per accedir a les variables de la primera classe del StatefulWidget.
   }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,6 +56,9 @@ class _ItemTascaState extends State<ItemTasca> {
               activeColor: ColorsApp.colorBlanc,
               hoverColor: ColorsApp.colorSecundariAccent,
             onChanged: (valor) {
+              
+//SetState: per notificar a Flutter que ha canviat l'estat del widget i que s'ha de tornar a dibuixar.
+//InitState: per inicialitzar les variables d'estat abans que el widget es construeixi.
               setState(() {
                 valorCheckbox = valor ?? false;
                 //??: si val null, posa-li el valor false
