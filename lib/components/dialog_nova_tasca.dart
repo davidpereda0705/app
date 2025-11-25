@@ -9,6 +9,11 @@ class DialogNovaTasca extends StatelessWidget {
   Widget build(BuildContext context){
     return AlertDialog(
 
+      backgroundColor: ColorsApp.colorSecundari,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusGeometry.circular(10),
+      ),
+
       title: Text("Quina nova tasca vols afegir?",
       style: TextStyle(color: ColorsApp.colorPrimari),
       ),
