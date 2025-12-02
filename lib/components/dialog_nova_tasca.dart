@@ -1,5 +1,6 @@
 import 'package:app/colors_app.dart';
 import 'package:app/components/boton_dialog.dart';
+import 'package:app/components/textfield_personalitzat.dart';
 import 'package:flutter/material.dart';
 
 class DialogNovaTasca extends StatelessWidget {
@@ -12,6 +13,10 @@ class DialogNovaTasca extends StatelessWidget {
       backgroundColor: ColorsApp.colorSecundari,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusGeometry.circular(10),
+        side: BorderSide(
+          color: ColorsApp.colorPrimari,
+          width: 2,
+        ),
       ),
 
       title: Text("Quina nova tasca vols afegir?",
@@ -19,9 +24,13 @@ class DialogNovaTasca extends StatelessWidget {
       ),
 
       content: Container(
+
+        height: 150,
+        width: MediaQuery.of(context).size.width * 0.8,
+
         child: Column(
           children: [
-            TextField(),
+            TextfieldPersonalitzat(),
             SizedBox(height: 24,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
