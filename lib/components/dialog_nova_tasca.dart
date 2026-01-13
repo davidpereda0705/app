@@ -20,6 +20,7 @@ class DialogNovaTasca extends StatelessWidget {
   Widget build(BuildContext context){
 
     final TextEditingController controllerTextTasca = TextEditingController();
+    controllerTextTasca.text = textTasca;
 
     return AlertDialog(
 
@@ -32,7 +33,8 @@ class DialogNovaTasca extends StatelessWidget {
         ),
       ),
 
-      title: Text("Quina nova tasca vols afegir?",
+      title: Text(
+        indexTasca == -1 ? " Quina nova tasca vols afegir?" : "Edita la tasca",
       style: TextStyle(color: ColorsApp.colorPrimari),
       ),
 

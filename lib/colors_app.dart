@@ -13,3 +13,38 @@ class ColorsApp {
 
     static Color colorRosa = const Color.fromARGB(255, 255, 0, 200);
 }
+
+/**
+ *static:
+  Si l'attribut A d'una classe és estàtic:
+    - Llavors si tenim dos objectes obj1 i obj2 de la classe A, si obj1 canvia
+      el valor static de A, per obj2 també es canvia. O sigui,
+      comparteixen aquest valor. O sigui els static es comparteixen entre els
+      objectes de la classe.
+    - Podem accedir als valors de static, sense instanciar objectes de la classe.
+      (Instanciar és fer: ColorsApp color = ColorsApp();)
+    - Si no ho féssim static, cada vegada que volem utilitzar un color, hauríem
+      de crear una nova instància de la classe (ocupant memòria per cada vegada).
+
+/**
+ * @brief Classe ColorApp
+ */
+class ColorApp {
+public:
+    /**
+     * @brief Constructe una nova instància de la classe ColorApp
+     */
+    ColorApp();
+
+    /**
+     * @brief Mostra el valor del color en pantalla
+     */
+    void showColor() const;
+
+private:
+    /**
+     * @brief Variable privada per a la classe ColorApp
+     */
+    int m_color;
+};
+ */
