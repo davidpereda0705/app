@@ -18,8 +18,6 @@ class RepositoriContacte {
   }
 
   List<dynamic> getLlistaContactes() {
-    // Retorna la llista de contactos
-    // Si no hay nada, retorna una lista vacía (no datos de ejemplo por defecto)
     return _getBox().get(
       clauLlistaContactes, 
       defaultValue: <Contacte>[] // Lista vacía por defecto
@@ -44,16 +42,32 @@ class RepositoriContacte {
     await setBox(LlistaContactes);
   }
 
-  // Método opcional para inicializar con datos de prueba (similar a lo que tenías)
+  // Método para inicializar con datos de prueba
   Future<void> inicialitzarAmbDadesProva() async {
     final llistaActual = getLlistaContactes();
     
     if (llistaActual.isEmpty) {
       final contactesProva = [
-        Contacte(nom: 'Joan Martínez', telefon: '612345678', email: 'joan@exemple.cat'),
-        Contacte(nom: 'Maria García', telefon: '623456789', email: 'maria@exemple.cat'),
-        Contacte(nom: 'Pere López', telefon: '634567890', email: 'pere@exemple.cat'),
-        Contacte(nom: 'Anna Rodríguez', telefon: '645678901', email: 'anna@exemple.cat'),
+        Contacte(
+          nom: 'Joan Martínez', 
+          email: 'joan@exemple.cat',
+          contrasenya: '1234'  // Contraseña de ejemplo
+        ),
+        Contacte(
+          nom: 'Maria García', 
+          email: 'maria@exemple.cat',
+          contrasenya: 'abcd'
+        ),
+        Contacte(
+          nom: 'Pere López', 
+          email: 'pere@exemple.cat',
+          contrasenya: 'pass123'
+        ),
+        Contacte(
+          nom: 'Anna Rodríguez', 
+          email: 'anna@exemple.cat',
+          contrasenya: 'anna456'
+        ),
       ];
       
       await setBox(contactesProva);

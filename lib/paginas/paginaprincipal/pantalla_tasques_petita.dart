@@ -32,7 +32,7 @@ class _PantallaTasquesPetitaState extends State<PantallaTasquesPetita> {
   Future<void> _inicialitzarContactesProva() async {
     final repositoriContacte = RepositoriContacte();
     final llistaContactes = repositoriContacte.getLlistaContactes();
-    
+
     if (llistaContactes.isEmpty) {
       await repositoriContacte.inicialitzarAmbDadesProva();
     }
@@ -79,8 +79,9 @@ class _PantallaTasquesPetitaState extends State<PantallaTasquesPetita> {
                       RepositoriContacte.nomBoxContactes,
                     ).listenable(),
                     builder: (context, Box<List<dynamic>> boxContactes, _) {
-                      final LlistaContactes = repositoriContacte.getLlistaContactes();
-                      
+                      final LlistaContactes = repositoriContacte
+                          .getLlistaContactes();
+
                       if (LlistaContactes.isEmpty) {
                         return Center(
                           child: Column(
@@ -88,7 +89,8 @@ class _PantallaTasquesPetitaState extends State<PantallaTasquesPetita> {
                             children: [
                               Icon(
                                 Icons.contacts,
-                                color: ColorsApp.colorSecundariAccent.withOpacity(0.6),
+                                color: ColorsApp.colorSecundariAccent
+                                    .withOpacity(0.6),
                                 size: 100,
                               ),
                               SizedBox(height: 20),
@@ -103,23 +105,16 @@ class _PantallaTasquesPetitaState extends State<PantallaTasquesPetita> {
                           ),
                         );
                       }
-                      
+
                       return ListView.builder(
                         itemCount: LlistaContactes.length,
                         itemBuilder: (context, index) {
                           final contacte = LlistaContactes[index] as Contacte;
                           return ItemContacte(
                             nom: contacte.nom,
-                            telefon: contacte.telefon,
-                            email: contacte.email,
+                            email:
+                                contacte.email, // Solo pasamos nombre y email
                             indexContacte: index,
-                            onEditar: () {
-                              _mostrarMensajeTemporal(context, 'Editar ${contacte.nom}');
-                            },
-                            onEliminar: () {
-                              repositoriContacte.esborraContacte(index);
-                              _mostrarMensajeTemporal(context, 'Eliminat ${contacte.nom}');
-                            },
                           );
                         },
                       );
@@ -147,7 +142,8 @@ class _PantallaTasquesPetitaState extends State<PantallaTasquesPetita> {
                           return ItemTasca(
                             valorText: (LlistaTasques[index] as Tasca).titol,
                             indexTasca: index,
-                            valorInicialCheckbox: (LlistaTasques[index] as Tasca).completada,
+                            valorInicialCheckbox:
+                                (LlistaTasques[index] as Tasca).completada,
                           );
                         },
                       );

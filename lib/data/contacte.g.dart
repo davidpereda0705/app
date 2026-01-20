@@ -18,8 +18,8 @@ class ContacteAdapter extends TypeAdapter<Contacte> {
     };
     return Contacte(
       nom: fields[0] as String,
-      telefon: fields[1] as String,
-      email: fields[2] as String,
+      email: fields[1] as String,
+      contrasenya: fields[2] as String,
     );
   }
 
@@ -30,9 +30,9 @@ class ContacteAdapter extends TypeAdapter<Contacte> {
       ..writeByte(0)
       ..write(obj.nom)
       ..writeByte(1)
-      ..write(obj.telefon)
+      ..write(obj.email)
       ..writeByte(2)
-      ..write(obj.email);
+      ..write(obj.contrasenya);
   }
 
   @override
