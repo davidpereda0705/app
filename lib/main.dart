@@ -1,3 +1,5 @@
+import 'package:app/data/contacte.dart';
+import 'package:app/data/repositori_contacte.dart';
 import 'package:app/data/repositori_tasca.dart';
 import 'package:app/data/tasca.dart';
 import 'package:app/paginas/paginaprincipal/pantalla_tasques_gran.dart';
@@ -32,9 +34,11 @@ Future<void> main() async{
 
   //Fem que faci servir l'adaptador de la classe Tasca (arxiu tasca.g.dart)
   Hive.registerAdapter(TascaAdapter());
+   Hive.registerAdapter(ContacteAdapter());
 
   //Obrim una box de Hive per a guardar la llista de tasques
   await Hive.openBox<List<dynamic>>(RepositoriTasca.nomBoxTasques);
+  await Hive.openBox<List<dynamic>>(RepositoriContacte.nomBoxContactes);
   
   //Si tenim mes boxs, hauriem de fer el mateix per a cadascuna
   runApp(const MainApp());

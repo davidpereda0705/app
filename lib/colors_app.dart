@@ -15,7 +15,7 @@ class ColorsApp {
 }
 
 /**
- *static:
+static:
   Si l'attribut A d'una classe és estàtic:
     - Llavors si tenim dos objectes obj1 i obj2 de la classe A, si obj1 canvia
       el valor static de A, per obj2 també es canvia. O sigui,
@@ -46,5 +46,4 @@ private:
      * @brief Variable privada per a la classe ColorApp
      */
     int m_color;
-};
  */
