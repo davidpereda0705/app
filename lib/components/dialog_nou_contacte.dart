@@ -25,7 +25,7 @@ class DialogNouContacte extends StatelessWidget {
 
     final TextEditingController controllerNomContacte = TextEditingController();
     final TextEditingController controllerEmailContacte = TextEditingController();
-    final TextEditingController controllerContrasenyaContacte = TextEditingController(); // CAMBIADO
+    final TextEditingController controllerContrasenyaContacte = TextEditingController(); 
     
     controllerNomContacte.text = nomContacte;
     controllerEmailContacte.text = emailContacte;
@@ -127,7 +127,7 @@ class DialogNouContacte extends StatelessWidget {
     );
   }
 
-  void editaContacte(BuildContext context, String nom, String email, String contrasenya, int indexContacte){ // CAMBIADO
+  void editaContacte(BuildContext context, String nom, String email, String contrasenya, int indexContacte){ 
     RepositoriContacte repositoriContacte = RepositoriContacte();
     repositoriContacte.actualitzaContacte(
       indexContacte,
@@ -136,7 +136,7 @@ class DialogNouContacte extends StatelessWidget {
     Navigator.of(context).pop();
   }
   
-  void guardarContacte(BuildContext context, String nom, String email, String contrasenya){ // CAMBIADO
+  void guardarContacte(BuildContext context, String nom, String email, String contrasenya){ 
     RepositoriContacte repositoriContacte = RepositoriContacte();
     
     // Validación básica
@@ -151,7 +151,7 @@ class DialogNouContacte extends StatelessWidget {
     }
     
     repositoriContacte.afegirContacte(
-      Contacte(nom: nom, email: email, contrasenya: contrasenya) // CAMBIADO
+      Contacte(nom: nom, email: email, contrasenya: contrasenya) 
     );
     Navigator.of(context).pop();
   }

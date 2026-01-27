@@ -58,7 +58,6 @@ class _PantallaTasquesMitjanaState extends State<PantallaTasquesMitjana> {
       ),
       body: Row(
         children: [
-          //TASQUES 
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -69,159 +68,181 @@ class _PantallaTasquesMitjanaState extends State<PantallaTasquesMitjana> {
                   ),
                 ),
               ),
-              child: Stack(
-                children: [
-                  ValueListenableBuilder(
-                    valueListenable: Hive.box<List<dynamic>>(
-                      RepositoriTasca.nomBoxTasques,
-                    ).listenable(),
-                    //Amb el tooltip podem veure el valor que espera rebre
-                    // En aquest cas espera rebre una funcio que rep 3 parametres
-                    // i retorna un Widget
-                    // El tercer parametre, es un Widget que es podem passar
-                    // Si no es fa servir algun parametre, pero l'hem de rebre, se li acostuma a
-                    // posar de nom "_". En el nostre cas, no el farem servir
-                    // Si el fesim servir, seria un widget , que el podriem utilitzar dins del builder
-                    // L'advantatge de passar aquest widget, es que no es tornar a construir quan es
-                    //crida el builder (que es crida cada vegada que hi ha canvis a la llista).
-                    // Es una optmitzacio.
-                    builder: (context, Box<List<dynamic>> boxTasques, _) {
-                      final LlistaTasques = repositoriTasca.getLlistaTasques();
-                      if (LlistaTasques.isEmpty) {
-                        return Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.checklist_outlined,
-                                color: ColorsApp.colorSecundariAccent.withOpacity(0.6),
-                                size: 80,
-                              ),
-                              SizedBox(height: 20),
-                              Text(
-                                'No hi ha tasques\nPrem + per afegir-ne',
-                                style: TextStyle(
-                                  color: ColorsApp.colorBlanc.withOpacity(0.7),
-                                  fontSize: 16,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                      return ListView.builder(
-                        padding: EdgeInsets.only(bottom: 80),
-                        itemCount: LlistaTasques.length,
-                        itemBuilder: (context, index) {
-                          return ItemTasca(
-                            valorText: (LlistaTasques[index] as Tasca).titol,
-                            indexTasca: index,
-                            valorInicialCheckbox:
-                                (LlistaTasques[index] as Tasca).completada,
-                          );
-                        },
-                      );
-                    },
-                  ),
-                  Positioned(
-                    bottom: 16,
-                    right: 16,
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        obreDialogNovaTasca(context);
-                      },
-                      backgroundColor: Colors.deepPurple[300],
-                      child: Icon(
-                        Icons.add,
-                        color: ColorsApp.colorSecundariAccent,
-                      ),
-                      shape: CircleBorder(
-                        side: BorderSide(color: ColorsApp.colorSecundariAccent),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              child: _buildColumnaTasques(repositoriTasca),
             ),
           ),
-
-          //CONTACTES
           Expanded(
-            child: Stack(
-              children: [
-                ValueListenableBuilder(
-                  valueListenable: Hive.box<List<dynamic>>(
-                    RepositoriContacte.nomBoxContactes,
-                  ).listenable(),
-                  builder: (context, Box<List<dynamic>> boxContactes, _) {
-                    final LlistaContactes = repositoriContacte.getLlistaContactes();
-                    
-                    if (LlistaContactes.isEmpty) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.contacts_outlined,
-                              color: ColorsApp.colorSecundariAccent.withOpacity(0.6),
-                              size: 80,
-                            ),
-                            SizedBox(height: 20),
-                            Text(
-                              'No hi ha contactes\nPrem + per afegir-ne',
-                              style: TextStyle(
-                                color: ColorsApp.colorBlanc.withOpacity(0.7),
-                                fontSize: 16,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                    
-                    return ListView.builder(
-                      padding: EdgeInsets.only(bottom: 80),
-                      itemCount: LlistaContactes.length,
-                      itemBuilder: (context, index) {
-                        final contacte = LlistaContactes[index];
-                        if (contacte is Contacte) {
-                          return ItemContacte(
-                            nom: contacte.nom,
-                            email: contacte.email,
-                            contrasenya: contacte.contrasenya,
-                            indexContacte: index,
-                          );
-                        } else {
-                          return Container();
-                        }
-                      },
-                    );
-                  },
-                ),
-                Positioned(
-                  bottom: 16,
-                  right: 16,
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      _obreDialogNouContacte(context);
-                    },
-                    backgroundColor: Colors.deepPurple[300],
-                    child: Icon(
-                      Icons.person_add,
-                      color: ColorsApp.colorSecundariAccent,
-                    ),
-                    shape: CircleBorder(
-                      side: BorderSide(color: ColorsApp.colorSecundariAccent),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            child: _buildColumnaContactes(repositoriContacte),
           ),
         ],
       ),
+    );
+  }
+
+  //TASQUES
+  Widget _buildColumnaTasques(RepositoriTasca repositoriTasca) {
+    return Column(
+      children: [
+        Expanded(
+          child: ValueListenableBuilder(
+            valueListenable: Hive.box<List<dynamic>>(
+              RepositoriTasca.nomBoxTasques,
+            ).listenable(),
+            //Amb el tooltip podem veure el valor que espera rebre
+            // En aquest cas espera rebre una funcio que rep 3 parametres
+            // i retorna un Widget
+            // El tercer parametre, es un Widget que es podem passar
+            // Si no es fa servir algun parametre, pero l'hem de rebre, se li acostuma a
+            // posar de nom "_". En el nostre cas, no el farem servir
+            // Si el fesim servir, seria un widget , que el podriem utilitzar dins del builder
+            // L'advantatge de passar aquest widget, es que no es tornar a construir quan es
+            //crida el builder (que es crida cada vegada que hi ha canvis a la llista).
+            // Es una optmitzacio.
+            builder: (context, Box<List<dynamic>> boxTasques, _) {
+              final LlistaTasques = repositoriTasca.getLlistaTasques();
+              if (LlistaTasques.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.checklist_outlined,
+                        color: ColorsApp.colorSecundariAccent.withOpacity(0.6),
+                        size: 80,
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'No hi ha tasques\nPrem + per afegir-ne',
+                        style: TextStyle(
+                          color: ColorsApp.colorBlanc.withOpacity(0.7),
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                );
+              }
+              return ListView.builder(
+                padding: EdgeInsets.only(bottom: 80), 
+                itemCount: LlistaTasques.length,
+                itemBuilder: (context, index) {
+                  return ItemTasca(
+                    valorText: (LlistaTasques[index] as Tasca).titol,
+                    indexTasca: index,
+                    valorInicialCheckbox:
+                        (LlistaTasques[index] as Tasca).completada,
+                  );
+                },
+              );
+            },
+          ),
+        ),
+
+        Container(
+          padding: EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end, 
+            children: [
+              FloatingActionButton(
+                onPressed: () {
+                  obreDialogNovaTasca(context);
+                },
+                backgroundColor: Colors.deepPurple[300],
+                child: Icon(
+                  Icons.add,
+                  color: ColorsApp.colorSecundariAccent,
+                ),
+                shape: CircleBorder(
+                  side: BorderSide(color: ColorsApp.colorSecundariAccent),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  // CONTACTES
+  Widget _buildColumnaContactes(RepositoriContacte repositoriContacte) {
+    return Column(
+      children: [
+
+        Expanded(
+          child: ValueListenableBuilder(
+            valueListenable: Hive.box<List<dynamic>>(
+              RepositoriContacte.nomBoxContactes,
+            ).listenable(),
+            builder: (context, Box<List<dynamic>> boxContactes, _) {
+              final LlistaContactes = repositoriContacte.getLlistaContactes();
+              
+              if (LlistaContactes.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.contacts_outlined,
+                        color: ColorsApp.colorSecundariAccent.withOpacity(0.6),
+                        size: 80,
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'No hi ha contactes\nPrem + per afegir-ne',
+                        style: TextStyle(
+                          color: ColorsApp.colorBlanc.withOpacity(0.7),
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                );
+              }
+              
+              return ListView.builder(
+                padding: EdgeInsets.only(bottom: 80), 
+                itemCount: LlistaContactes.length,
+                itemBuilder: (context, index) {
+                  final contacte = LlistaContactes[index];
+                  if (contacte is Contacte) {
+                    return ItemContacte(
+                      nom: contacte.nom,
+                      email: contacte.email,
+                      contrasenya: contacte.contrasenya,
+                      indexContacte: index,
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              );
+            },
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.all(16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end, 
+            children: [
+              FloatingActionButton(
+                onPressed: () {
+                  _obreDialogNouContacte(context);
+                },
+                backgroundColor: Colors.deepPurple[300],
+                child: Icon(
+                  Icons.person_add,
+                  color: ColorsApp.colorSecundariAccent,
+                ),
+                shape: CircleBorder(
+                  side: BorderSide(color: ColorsApp.colorSecundariAccent),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
