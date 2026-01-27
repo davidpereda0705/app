@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 
 class TextfieldPersonalitzat extends StatelessWidget {
   final TextEditingController controllerTitol;
+  final String hintText;
+  final IconData? iconPrefix;
+  final TextInputType? keyboardType;
 
    const TextfieldPersonalitzat({
     super.key,
     required this.controllerTitol,
+    this.hintText = "Introdueix la teva tasca",
+    this.iconPrefix,
+    this.keyboardType,
     });
 
   @override
@@ -15,6 +21,7 @@ class TextfieldPersonalitzat extends StatelessWidget {
       controller: controllerTitol,
       cursorColor: ColorsApp.colorPrimari,
       cursorWidth: 2,
+      keyboardType: keyboardType ?? TextInputType.text,
       
       style: TextStyle(
         color: ColorsApp.colorPrimari,
@@ -25,9 +32,13 @@ class TextfieldPersonalitzat extends StatelessWidget {
         decoration: InputDecoration(
           hint: Row(
             children: [
-              Icon(Icons.edit, color: ColorsApp.colorPrimari,),
+              Icon(
+                iconPrefix ?? Icons.edit, 
+                color: ColorsApp.colorPrimari,
+              ),
+              SizedBox(width: 8),
               Text(
-                "Introdueix la teva tasca",
+                hintText,
                 style: TextStyle(
                   color: ColorsApp.colorPrimari,
                   fontStyle: FontStyle.italic,

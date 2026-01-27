@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:app/colors_app.dart';
 import 'package:app/components/dialog_nova_tasca.dart';
+import 'package:app/components/dialog_nou_contacte.dart'; 
 import 'package:app/components/item_tasca.dart';
 import 'package:app/components/item_contacte.dart';
 import 'package:app/data/repositori_tasca.dart';
@@ -25,7 +26,6 @@ class _PantallaTasquesPetitaState extends State<PantallaTasquesPetita> {
   @override
   void initState() {
     super.initState();
-    // Inicializar datos de prueba para contactos
     _inicialitzarContactesProva();
   }
 
@@ -48,7 +48,7 @@ class _PantallaTasquesPetitaState extends State<PantallaTasquesPetita> {
       appBar: AppBar(
         backgroundColor: ColorsApp.colorSecundari,
         title: Text(
-          'App Tasques - Mòbil',
+          _mostrarListaPredefinida ? 'Contactes - Mòbil' : 'App Tasques - Mòbil',
           style: TextStyle(color: ColorsApp.colorBlanc),
         ),
         actions: [
@@ -109,13 +109,17 @@ class _PantallaTasquesPetitaState extends State<PantallaTasquesPetita> {
                       return ListView.builder(
                         itemCount: LlistaContactes.length,
                         itemBuilder: (context, index) {
-                          final contacte = LlistaContactes[index] as Contacte;
-                          return ItemContacte(
-                            nom: contacte.nom,
-                            email:
-                                contacte.email, // Solo pasamos nombre y email
-                            indexContacte: index,
-                          );
+                          final contacte = LlistaContactes[index];
+                          if (contacte is Contacte) {
+                            return ItemContacte(
+                              nom: contacte.nom,
+                              email: contacte.email,
+                              contrasenya: contacte.contrasenya, 
+                              indexContacte: index,
+                            );
+                          } else {
+                            return Container();
+                          }
                         },
                       );
                     },
@@ -164,10 +168,19 @@ class _PantallaTasquesPetitaState extends State<PantallaTasquesPetita> {
         children: [
           FloatingActionButton(
             onPressed: () {
-              obreDialogNovaTasca(context);
+              if (_mostrarListaPredefinida) {
+                
+                _obreDialogNouContacte(context);
+              } else {
+               
+                obreDialogNovaTasca(context);
+              }
             },
             backgroundColor: Colors.deepPurple[300],
-            child: Icon(Icons.add, color: ColorsApp.colorSecundariAccent),
+            child: Icon(
+              _mostrarListaPredefinida ? Icons.person_add : Icons.add,
+              color: ColorsApp.colorSecundariAccent,
+            ),
             shape: CircleBorder(
               side: BorderSide(color: ColorsApp.colorSecundariAccent),
             ),
@@ -184,7 +197,7 @@ class _PantallaTasquesPetitaState extends State<PantallaTasquesPetita> {
             },
             backgroundColor: Colors.deepPurple[300],
             child: Icon(
-              Icons.person_search,
+              _mostrarListaPredefinida ? Icons.menu : Icons.person_search,
               color: ColorsApp.colorSecundariAccent,
             ),
             shape: CircleBorder(
@@ -206,13 +219,13 @@ class _PantallaTasquesPetitaState extends State<PantallaTasquesPetita> {
     );
   }
 
-  void _mostrarMensajeTemporal(BuildContext context, String mensaje) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(mensaje),
-        backgroundColor: ColorsApp.colorSecundari,
-        duration: Duration(seconds: 1),
-      ),
+  void _obreDialogNouContacte(BuildContext context) {
+    // showDailog es una funcio de Flutter que obra un dialeg que haguem crear/definit
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogNouContacte();
+      },
     );
   }
 }
