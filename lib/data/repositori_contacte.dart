@@ -7,12 +7,10 @@ class RepositoriContacte {
   static const String clauLlistaContactes = 'LlistaContactes';
   static const String nomBoxContactes = 'BoxContactes_app_contactes';
 
-  // Método Get para la box
   Box<List<dynamic>> _getBox() {
     return Hive.box<List<dynamic>>(nomBoxContactes);
   } 
 
-  // Método Set
   Future<void> setBox(List<dynamic> LlistaContactes) async {
     await _getBox().put(clauLlistaContactes, LlistaContactes);
   }
@@ -20,7 +18,7 @@ class RepositoriContacte {
   List<dynamic> getLlistaContactes() {
     return _getBox().get(
       clauLlistaContactes, 
-      defaultValue: <Contacte>[] // Lista vacía por defecto
+      defaultValue: <Contacte>[]
     )!;
   }
 
@@ -49,24 +47,9 @@ class RepositoriContacte {
     if (llistaActual.isEmpty) {
       final contactesProva = [
         Contacte(
-          nom: 'Joan Martínez', 
-          email: 'joan@exemple.cat',
-          contrasenya: '1234'  // Contraseña de ejemplo
-        ),
-        Contacte(
-          nom: 'Maria García', 
-          email: 'maria@exemple.cat',
-          contrasenya: 'abcd'
-        ),
-        Contacte(
-          nom: 'Pere López', 
-          email: 'pere@exemple.cat',
-          contrasenya: 'pass123'
-        ),
-        Contacte(
-          nom: 'Anna Rodríguez', 
-          email: 'anna@exemple.cat',
-          contrasenya: 'anna456'
+          nom: 'Exemple', 
+          email: 'exemple@exemple.cat',
+          contrasenya: '1234'  
         ),
       ];
       

@@ -8,12 +8,14 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 class ItemContacte extends StatefulWidget {
   final String nom;
   final String email;
+  final String contrasenya;
   final int indexContacte;
 
   const ItemContacte({
     super.key, 
     required this.nom,
     required this.email,
+    required this.contrasenya,
     required this.indexContacte,
   });
 
@@ -28,22 +30,22 @@ class _ItemContacteState extends State<ItemContacte> {
       endActionPane: ActionPane(
         motion: StretchMotion(), 
         children: [
+         
           SlidableAction(
             icon: Icons.edit,
-            backgroundColor: ColorsApp.colorPrimariAccent,
+            backgroundColor: ColorsApp.colorPrimariAccent, 
             borderRadius: BorderRadius.circular(10),
             onPressed: (context) {
-              _mostrarMensajeTemporal(context, 'Editar ${widget.nom}');
+             
             },
           ),
           SlidableAction(
             icon: Icons.delete,
-            backgroundColor: ColorsApp.colorPrimariAccent,
+            backgroundColor: ColorsApp.colorPrimariAccent, 
             borderRadius: BorderRadius.circular(10),
             onPressed: (context) {
               RepositoriContacte repositoriContacte = RepositoriContacte();
               repositoriContacte.esborraContacte(widget.indexContacte);
-              _mostrarMensajeTemporal(context, 'Eliminat ${widget.nom}');
             },
           ),
         ]
@@ -57,12 +59,10 @@ class _ItemContacteState extends State<ItemContacte> {
         ),
         child: Row(
           children: [
-            // Nombre y email (simple, igual que ItemTasca)
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Nombre (igual que el texto de tarea en ItemTasca)
                   Text(
                     widget.nom,
                     style: TextStyle(
@@ -72,7 +72,6 @@ class _ItemContacteState extends State<ItemContacte> {
                     ),
                   ),
                   SizedBox(height: 4),
-                  // Email (texto secundario)
                   Text(
                     widget.email,
                     style: TextStyle(
@@ -80,21 +79,19 @@ class _ItemContacteState extends State<ItemContacte> {
                       fontSize: 14,
                     ),
                   ),
+                  SizedBox(height: 2),
+                  Text(
+                    widget.contrasenya,
+                    style: TextStyle(
+                      color: ColorsApp.colorBlanc.withOpacity(0.6),
+                      fontSize: 12,
+                    ),
+                  ),
                 ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  void _mostrarMensajeTemporal(BuildContext context, String mensaje) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(mensaje),
-        backgroundColor: ColorsApp.colorSecundari,
-        duration: Duration(seconds: 1),
       ),
     );
   }
